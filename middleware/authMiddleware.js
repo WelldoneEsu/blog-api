@@ -27,3 +27,14 @@ exports.protect = async (req, res, next) => {
     return res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
+
+// Middleware to restrict to specific page
+exports.authorizeRoles = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res
+      .json({ message: 'Forbidden: Insufficient role permissions'});
+      }
+      next();
+  };
+};
