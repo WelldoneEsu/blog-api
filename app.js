@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
@@ -11,8 +10,7 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 // Load environment variables as early as possible
 dotenv.config();
-// Connect DB first
-connectDB(); 
+
 const allowedOrigins = [
     process.env.FRONTEND_URL,
     'http://localhost:3000',
