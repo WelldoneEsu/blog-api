@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-const cors = require("cors");
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 
 const authRoutes = require('./routes/authRoutes');
 const postRoutes = require('./routes/postRoutes');
@@ -13,6 +13,22 @@ const commentRoutes = require('./routes/commentRoutes');
 dotenv.config();
 // Connect DB first
 connectDB(); 
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'http://localhost:3000',
+    'http://localhost:5000' ]; // Frontend URL
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes (origin)) {
+            callback(null, true);
+        } else {
+        callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+}));
+
 
 // Security
 app.use(helmet());
