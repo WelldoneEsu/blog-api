@@ -49,6 +49,11 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'API is running sucessfully'})
 });
 
+// A simple health check route to confirm the API is live
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
